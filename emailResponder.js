@@ -54,7 +54,7 @@ async function sendReply(message) {
 	const email = emailLines.join("\r\n");
 
 	// Send the reply
-	await gmail.users.messages.send({
+	const replyMessage = await gmail.users.messages.send({
 		userId: "me",
 		requestBody: {
 			raw: Buffer.from(email).toString("base64"),
@@ -68,7 +68,7 @@ async function sendReply(message) {
 	// Add a label to the replied email
 	await gmail.users.messages.modify({
 		userId: "me",
-		id: message.id,
+		id: replyMessage.data.id,
 		resource: {
 			addLabelIds: ["Label_995227494935183765"],
 		},
